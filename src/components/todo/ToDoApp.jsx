@@ -1,13 +1,39 @@
 import React,{Component} from "react";
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 class ToDoApp extends Component{
     render(){
         return (
             <div>
-                <LoginComponent />
+            <Router>
+                <>
+                <Switch>
+                <Route path="/" exact component={LoginComponent}/>
+                <Route path="/login" component={LoginComponent} />
+                <Route path="/welcome/:name" component={WelcomeComponent} />
+                <Route component={ErrorComponent} />
+                </Switch>
+                </>
+            </Router>
+                {/* <LoginComponent />
+                <WelcomeComponent /> */}
             </div>
         )
     }
+}
+    
+class WelcomeComponent extends Component{
+    render(){
+        return(
+            <div>
+                Welcome {this.props.match.params.name}
+            </div>
+        )
+    }
+}
+
+function ErrorComponent(){
+    return <div>AN error has occured. You are using the wrong URL. Please validate your URL.</div>
 }
 
 class LoginComponent extends Component {
@@ -32,17 +58,20 @@ handleChange(event){
 }
 
 handleValidation(){
-    if(this.state.username==='in28minutes' && this.state.password==='dummy')
-        this.setState({
-            showSuccessMessage:true,
-            hasLoginFailed:false
-        })
+    if(this.state.username==='in28minutes' && this.state.password==='dummy'){
+        this.props.history.push('/welcome/${this.state.username}')
+        // this.setState({
+        //     showSuccessMessage:true,
+        //     hasLoginFailed:false
+        // })
+    }
     else
+    {
        
     this.setState({
         showSuccessMessage:false,
         hasLoginFailed:true
-    })
+    })}
 }
 
 
@@ -60,23 +89,5 @@ handleValidation(){
         )
     }
 }
-
-// function ShowInvalidCredentials(props){
-//     if(props.checkLoginFailed){
-//         return (
-//             <div>Invalid Credentials</div>
-//         )    
-//     }
-//     return null
-// };
-
-// function ShowLoginSuccessful(props){
-//     if(props.hasLoginSuccessful){
-//         return (
-//             <div>Login Successful</div>
-//         )
-//     }
-//     return null
-// };
 
 export default ToDoApp;
