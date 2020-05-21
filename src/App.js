@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import "./styles.css";
 import "./bootstrap.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import FirstComponent from "./components/learning-components/FirstComponent.jsx";
 import SecondComponent from "./components/learning-components/SecondComponent.jsx";
