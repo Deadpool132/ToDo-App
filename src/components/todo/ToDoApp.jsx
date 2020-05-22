@@ -1,5 +1,6 @@
 import React,{Component} from "react";
 import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
+import AuthenticationService from "./AuthenticationService.js"
 
 class ToDoApp extends Component{
     render(){
@@ -135,6 +136,7 @@ handleChange(event){
 
 handleValidation(){
     if(this.state.username==='in28minutes' && this.state.password==='dummy'){
+        AuthenticationService.registerSuccessfulLogin(this.state.username,this.state.password)
         this.props.history.push('/welcome/${this.state.username}')
         // this.setState({
         //     showSuccessMessage:true,
