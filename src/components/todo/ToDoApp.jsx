@@ -1,5 +1,6 @@
 import React,{Component} from "react";
 import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
+import "./todo.css"
 
 class ToDoApp extends Component{
     render(){
@@ -13,6 +14,7 @@ class ToDoApp extends Component{
                 <Route path="/login" component={LoginComponent} />
                 <Route path="/welcome/:name" component={WelcomeComponent} />
                 <Route path="/todos" component={ToDosComponent}/>
+                <Route path="/logout" component={LogoutComponent}/>
                 <Route component={ErrorComponent} />
                 </Switch>
                 <FooterComponent/>
@@ -42,10 +44,10 @@ class ToDosComponent extends Component {
         return(
             <div>
                 <h1>List ToDos</h1>
-                <table>
+                <div className="container">
+                <table className="table">
                     <thead>
                         <tr>
-                            <th>Id</th>
                             <th>Description</th>
                             <th>Is completed?</th>
                             <th>Target Date</th>
@@ -56,7 +58,6 @@ class ToDosComponent extends Component {
                             this.state.todos.map( 
                                 todo => 
                                 <tr>
-                                    <td>{todo.id}</td>
                                     <td>{todo.description}</td>
                                     <td>{todo.done.toString()}</td>
                                     <td>{todo.targetDate.toString()}</td>
@@ -65,6 +66,7 @@ class ToDosComponent extends Component {
                             }
                     </tbody>
                 </table>
+                </div>
             </div>
         )
     }
@@ -74,15 +76,15 @@ class HeaderComponent extends Component {
     render(){
         return (
             <header>
-                <nav className="navbar navbar-expand-md">
-                    <div><a>Vinay Garg</a></div>
+                <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+                    <div ><a className="navbar-brand" href="https://deadpool132.github.io/vgarg.github.io/">Vinay Garg</a></div>
                     <ul className="navbar-nav">
-                        <li>Home</li>
-                        <li>ToDos</li>
+                        <li ><Link className="nav-link" to="/welcome/in28minutes">Home</Link></li>
+                        <li ><Link className="nav-link" to="/todos">ToDos</Link></li>
                     </ul>
-                    <ul className="navbar-nav">
-                        <li>Login</li>
-                        <li>Logout</li>
+                    <ul className="navbar-nav navbar-collapse justify-content-end" >
+                        <li ><Link className="nav-link" to="/login">Login</Link></li>
+                        <li ><Link className="nav-link" to="/logout">Logout</Link></li>
                     </ul>
                 </nav>
             </header>
@@ -92,24 +94,42 @@ class HeaderComponent extends Component {
 class FooterComponent extends Component {
     render(){
         return (
-            <div>
-                <hr/>Footer
-            </div>
+            <footer className="footer Layout container">
+                <span class="text-muted">All Rights Reserved @2020 Vinay Garg</span>
+            </footer>
         )
     }
 }
 class WelcomeComponent extends Component{
     render(){
         return(
-            <div>
+            <>
+              <h1>Welcome!</h1>
+              <div className="container">
                 Welcome {this.props.match.params.name}. You can manage your ToDos <Link to="/todos">here</Link>
             </div>
+            </>
+
+            
         )
     }
 }
 
 function ErrorComponent(){
     return <div>AN error has occured. You are using the wrong URL. Please validate your URL.</div>
+}
+
+class LogoutComponent extends Component{
+    render(){
+        return(
+            <>
+                <h1>You are logged out.</h1>
+                <div class="container">
+                    Thank you for using our application.
+                </div>
+            </>
+        )
+    }
 }
 
 class LoginComponent extends Component {
@@ -154,13 +174,16 @@ handleValidation(){
     render(){
         return (
             <div>
+            <h1>Login</h1>
+            <div className="container">
             {/*<ShowInvalidCredentials checkLoginFailed={this.state.hasLoginFailed}/>*/}
-            {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
+            {this.state.hasLoginFailed && <div className="alert alert-warning">Invalid Credentials</div>}
             {this.state.showSuccessMessage && <div>Login Successful</div>}
             {/*<ShowLoginSuccessful hasLoginSuccessful={this.state.showSuccessMessage}/>*/}
-                Username : <input type="text" name="username" value={this.state.username} onChange={this.handleChange} /><br/>
-                Password : <input type="password" name="password" value={this.state.password} onChange={this.handleChange}/><br/>
-                <button onClick={this.handleValidation}>Login</button>
+                Username : <input type="text" style={{marginBottom : "10px"}} name="username" value={this.state.username} onChange={this.handleChange} /><br/>
+                Password : <input type="password" style={{marginBottom : "10px"}} name="password" value={this.state.password} onChange={this.handleChange}/><br/>
+                <button className="btn btn-success"onClick={this.handleValidation}>Login</button>
+                </div>
             </div>
         )
     }
