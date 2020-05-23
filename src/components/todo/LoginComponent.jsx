@@ -26,7 +26,7 @@ class LoginComponent extends Component {
     handleValidation(){
         if(this.state.username==='in28minutes' && this.state.password==='dummy'){
             AuthenticationService.registerSuccessfulLogin(this.state.username,this.state.password)
-            this.props.history.push('/welcome/Vinay')
+            this.props.history.push(`/welcome/${this.state.username}`)
             // this.setState({
             //     showSuccessMessage:true,
             //     hasLoginFailed:false
